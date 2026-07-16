@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Houston Ramos y Co Finance V1</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Source+Sans+3:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./css/base.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="brand-block">
+          <p class="eyebrow">Houston Ramos y Co</p>
+          <h1>Panel financiero gerencial manual para cerrar bien el mes.</h1>
+          <p class="support-copy">
+            Esta versión se alimenta con resúmenes mensuales y deja la base lista para
+            crecer luego a captura semanal, diaria y automatizaciones.
+          </p>
+        </div>
+
+        <nav class="nav" aria-label="Secciones">
+          <button class="nav-link is-active" type="button" data-view-target="panel">
+            <span class="nav-label">Panel</span>
+            <span class="nav-note">Márgenes, caja, deuda y consolidado</span>
+          </button>
+          <button class="nav-link" type="button" data-view-target="cargas">
+            <span class="nav-label">Cargas</span>
+            <span class="nav-note">Resúmenes mensuales controlados</span>
+          </button>
+          <button class="nav-link" type="button" data-view-target="chat">
+            <span class="nav-label">Chat IA</span>
+            <span class="nav-note">Carga guiada, consultas y análisis</span>
+          </button>
+          <button class="nav-link" type="button" data-view-target="control">
+            <span class="nav-label">Control</span>
+            <span class="nav-note">Sheet maestro, catálogos y API</span>
+          </button>
+        </nav>
+
+        <section class="side-card">
+          <p class="eyebrow">Periodo activo</p>
+          <div class="period-row">
+            <input id="globalPeriod" type="month" />
+            <button id="refreshDashboardButton" class="ghost-button" type="button">
+              Recargar panel
+            </button>
+          </div>
+        </section>
+
+        <section class="side-card">
+          <p class="eyebrow">Visión V1</p>
+          <div class="mini-list">
+            <div class="mini-item">
+              <strong>Manual mensual</strong>
+              <span>Resúmenes confiables primero, automatización después.</span>
+            </div>
+            <div class="mini-item">
+              <strong>Sheet maestro</strong>
+              <span>Google Sheets es la base histórica y fuente oficial.</span>
+            </div>
+            <div class="mini-item">
+              <strong>Catálogos editables</strong>
+              <span>Se puede crecer sin romper el histórico.</span>
+            </div>
+          </div>
+        </section>
+      </aside>
+
+      <main class="main-content">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">Sistema financiero gerencial</p>
+            <h2 id="viewTitle">Panel de decisión</h2>
+            <p id="viewSubtitle" class="support-copy">
+              Margen por servicio, caja final, deuda y vista consolidada del grupo.
+            </p>
+          </div>
+
+          <div class="topbar-actions">
+            <button id="healthButton" class="ghost-button" type="button">Estado API</button>
+            <button id="bootstrapButton" class="solid-button" type="button">Sincronizar catálogos</button>
+          </div>
+        </header>
+
+        <div class="status-strip">
+          <div class="status-chip">
+            <span class="status-dot status-dot--info"></span>
+            <span id="apiStatusText">Modo demo hasta conectar Apps Script</span>
+          </div>
+          <div class="status-chip">
+            <span class="status-dot status-dot--open"></span>
+            <span>Fuente oficial: Google Sheet maestro</span>
+          </div>
+        <div class="status-chip">
+          <span id="periodStatusDot" class="status-dot status-dot--warning"></span>
+          <span id="periodStatusText">Periodo pendiente de validar</span>
+        </div>
+        </div>
+
+        <section class="view is-active" data-view="panel">
+          <div class="hero-grid">
+            <article class="panel">
+              <div class="panel-head">
+                <div>
+                  <p class="eyebrow">Resumen ejecutivo</p>
+                  <h3>Lo primero que tienes que mirar</h3>
+                </div>
+              </div>
+              <div id="overviewCards" class="metric-grid"></div>
+            </article>
+
+            <article class="panel panel--soft">
+              <div class="panel-head">
+                <div>
+                  <p class="eyebrow">Lectura rápida</p>
+                  <h3>Empresa con y sin deuda</h3>
+                </div>
+              </div>
+              <div id="overviewNarrative" class="narrative-card"></div>
+            </article>
+          </div>
+
+          <div class="triple-grid">
+            <article class="panel">
+              <div class="panel-head">
+                <div>
+                  <p class="eyebrow">Margen por servicio</p>
+                  <h3>Lavado, planchado y combinado</h3>
+                </div>
+              </div>
+              <div id="serviceTable" class="table-shell"></div>
+            </article>
+
+            <article class="panel">
+              <div class="panel-head">
+                <div>
+                  <p class="eyebrow">Margen por línea</p>
+                  <h3>Qué línea deja más contribución</h3>
+                </div>
+              </div>
+              <div id="lineTable" class="table-shell"></div>
+            </article>
+
+            <article class="panel">
+              <div class="panel-head">
+                <div>
+                  <p class="eyebrow">Por centro</p>
+                  <h3>Cómo se ve cada canal</h3>
+                </div>
+              </div>
+              <div id="centerTable" class="table-shell"></div>
+            </article>
+          </div>
+
+          <div class="split-grid">
+            <article class="panel">
+              <div class="panel-head">
+                <div>
+                  <p class="eyebrow">Caja y bancos</p>
+                  <h3>Saldos finales por cuenta</h3>
+                </div>
+              </div>
+              <div id="cashTable" class="table-shell"></div>
+            </article>
+
+            <article class="panel">
+              <div class="panel-head">
+                <div>
+                  <p class="eyebrow">Deuda</p>
+                  <h3>Saldo, capital e interés</h3>
+                </div>
+              </div>
+              <div id="debtTable" class="table-shell"></div>
+            </article>
+          </div>
+        </section>
+
+        <section class="view" data-view="cargas">
+          <div class="split-grid split-grid--wide">
+            <article class="panel">
+              <div class="panel-head">
+                <div>
+                  <p class="eyebrow">Resumen mensual</p>
+                  <h3 id="formTitle">Ingresos del mes</h3>
+                </div>
+                <p id="formSummary" class="support-copy"></p>
+              </div>
+
+              <div class="tab-row">
+                <button class="tab is-active" type="button" data-form-target="ingresoMensual">Ingresos</button>
+                <button class="tab" type="button" data-form-target="cajaMensual">Caja y bancos</button>
+                <button class="tab" type="button" data-form-target="gastoMensual">Gastos</button>
+                <button class="tab" type="button" data-form-target="deudaMensual">Deuda</button>
+                <button class="tab" type="button" data-form-target="carteraMensual">CxC / CxP</button>
+                <button class="tab" type="button" data-form-target="impuestoMensual">Impuestos</button>
+              </div>
+
+              <form id="summaryForm" class="record-form"></form>
+            </article>
+
+            <article class="panel">
+              <div class="panel-head">
+                <div>
+                  <p class="eyebrow">Actividad</p>
+                  <h3>Últimos movimientos de carga</h3>
+                </div>
+              </div>
+              <div id="activityFeed" class="feed-list"></div>
+            </article>
+          </div>
+        </section>
+
+        <section class="view" data-view="chat">
+          <div class="split-grid split-grid--wide">
+            <article class="panel">
+              <div class="panel-head">
+                <div>
+                  <p class="eyebrow">Chat IA controlado</p>
+                  <h3>Carga guiada, consultas y análisis</h3>
+                </div>
+                <p class="support-copy">
+                  En V1 no inventa contabilidad: interpreta, pregunta lo que falta y
+                  propone un borrador confirmable.
+                </p>
+              </div>
+
+              <div class="chat-toolbar">
+                <select id="chatMode">
+                  <option value="cargar">Cargar</option>
+                  <option value="consultar">Consultar</option>
+                  <option value="analizar">Analizar</option>
+                </select>
+                <button id="chatExamplesButton" class="ghost-button" type="button">
+                  Ejemplos
+                </button>
+              </div>
+
+              <div id="chatTranscript" class="chat-transcript"></div>
+
+              <form id="chatForm" class="chat-form">
+                <textarea
+                  id="chatInput"
+                  placeholder="Escribe algo como: En julio 2026 Planta vendió 220000 de lavado por membresías con costo directo de 90000."
+                ></textarea>
+                <div class="chat-actions">
+                  <button class="solid-button" type="submit">Preguntar al chat</button>
+                  <button id="chatToFormButton" class="ghost-button" type="button">
+                    Pasar borrador a formulario
+                  </button>
+                </div>
+              </form>
+            </article>
+
+            <article class="panel">
+              <div class="panel-head">
+                <div>
+                  <p class="eyebrow">Borrador estructurado</p>
+                  <h3>Lo que el chat entendió</h3>
+                </div>
+              </div>
+              <div id="chatDraft" class="draft-card"></div>
+              <div id="chatQuestions" class="question-list"></div>
+            </article>
+          </div>
+        </section>
+
+        <section class="view" data-view="control">
+          <div class="split-grid split-grid--wide">
+            <article class="panel">
+              <div class="panel-head">
+                <div>
+                  <p class="eyebrow">Estado técnico</p>
+                  <h3>Conectividad y respuesta de la API</h3>
+                </div>
+              </div>
+              <div id="controlSummary" class="control-card"></div>
+              <div id="periodControlCard" class="control-card"></div>
+              <div class="chat-actions">
+                <button id="closePeriodButton" class="solid-button" type="button">
+                  Cerrar periodo actual
+                </button>
+              </div>
+              <pre id="output" class="output">Esperando acciones...</pre>
+            </article>
+
+            <article class="panel">
+              <div class="panel-head">
+                <div>
+                  <p class="eyebrow">Catálogos cargados</p>
+                  <h3>Lo que define la flexibilidad del sistema</h3>
+                </div>
+              </div>
+              <div id="catalogSummary" class="catalog-grid"></div>
+            </article>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="./js/api.js"></script>
+    <script src="./js/app.js"></script>
+  </body>
+</html>
