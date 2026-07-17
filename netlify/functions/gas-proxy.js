@@ -1,5 +1,7 @@
 const crypto = require('node:crypto');
 
+// Compatibilidad temporal para convivir con Apps Script legacy y modular.
+
 exports.handler = async function handler(event) {
   if (event.httpMethod !== 'POST') {
     return jsonResponse(405, {
@@ -35,45 +37,60 @@ exports.handler = async function handler(event) {
 
   const requestId = body.requestId || buildRequestId(body.action || 'proxy');
   const originalAction = body.action || '';
-  const translatedAction = translateAction_(originalAction);
   const requestedPeriod = normalizePeriod_(
     body.period ||
       body.periodo ||
       (body.payload && (body.payload.period || body.payload.periodo)) ||
       ''
   );
-  const payload = {
-    ...body,
-    action: translatedAction,
-    requestId,
-    authToken: gasToken,
-    token: gasToken
-  };
-
-  if (translatedAction === 'getDashboard' && requestedPeriod) {
-    payload.period = requestedPeriod;
-  }
+  const payloads = buildAttemptPayloads_(body, originalAction, requestId, gasToken, requestedPeriod);
 
   try {
-    const response = await fetch(gasUrl, {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json'
-      },
-      body: JSON.stringify(payload)
-    });
+    let lastAttempt = null;
 
-    const text = await response.text();
-    const parsed = safeJsonParse_(text);
-    const normalized = normalizeLegacyResponse_(originalAction, parsed, requestedPeriod);
+    for (const payload of payloads) {
+      const response = await fetch(gasUrl, {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      });
+
+      const text = await response.text();
+      const parsed = safeJsonParse_(text);
+      const normalized = normalizeGasResponse_(originalAction, parsed, requestedPeriod);
+
+      lastAttempt = {
+        response,
+        normalized
+      };
+
+      if (!shouldTryNextPayload_(payloads, payload, normalized)) {
+        return {
+          statusCode: response.ok ? 200 : response.status,
+          headers: {
+            'content-type': 'application/json',
+            'cache-control': 'no-store'
+          },
+          body: typeof normalized === 'string' ? normalized : JSON.stringify(normalized)
+        };
+      }
+    }
 
     return {
-      statusCode: response.ok ? 200 : response.status,
+      statusCode: lastAttempt && lastAttempt.response && lastAttempt.response.ok ? 200 : 502,
       headers: {
         'content-type': 'application/json',
         'cache-control': 'no-store'
       },
-      body: typeof normalized === 'string' ? normalized : JSON.stringify(normalized)
+      body: JSON.stringify(
+        (lastAttempt && lastAttempt.normalized) || {
+          ok: false,
+          code: 'GAS_EMPTY_RESPONSE',
+          message: 'Apps Script no devolvio una respuesta usable.'
+        }
+      )
     };
   } catch (error) {
     return jsonResponse(200, {
@@ -88,7 +105,32 @@ exports.handler = async function handler(event) {
   }
 };
 
-function translateAction_(action) {
+function buildAttemptPayloads_(body, originalAction, requestId, gasToken, requestedPeriod) {
+  const actions = [originalAction];
+  const legacyAction = translateLegacyAction_(originalAction);
+
+  if (legacyAction && legacyAction !== originalAction) {
+    actions.push(legacyAction);
+  }
+
+  return actions.map(function mapAction(action) {
+    const payload = {
+      ...body,
+      action,
+      requestId,
+      authToken: gasToken,
+      token: gasToken
+    };
+
+    if (action === 'getDashboard' && requestedPeriod) {
+      payload.period = requestedPeriod;
+    }
+
+    return payload;
+  });
+}
+
+function translateLegacyAction_(action) {
   if (action === 'getBootstrapData') {
     return 'getCatalogs';
   }
@@ -96,12 +138,40 @@ function translateAction_(action) {
   return action;
 }
 
-function normalizeLegacyResponse_(originalAction, parsed, requestedPeriod) {
+function shouldTryNextPayload_(payloads, payload, normalized) {
+  if (!Array.isArray(payloads) || payloads.length < 2) {
+    return false;
+  }
+
+  if (payload === payloads[payloads.length - 1]) {
+    return false;
+  }
+
+  return isRetryableActionError_(normalized);
+}
+
+function isRetryableActionError_(normalized) {
+  if (!normalized || typeof normalized !== 'object') {
+    return false;
+  }
+
+  if (normalized.ok) {
+    return false;
+  }
+
+  return ['UNKNOWN_ACTION', 'ACTION_NOT_FOUND', 'INVALID_ACTION'].includes(String(normalized.code || '').toUpperCase());
+}
+
+function normalizeGasResponse_(originalAction, parsed, requestedPeriod) {
   if (!parsed || typeof parsed !== 'object') {
     return parsed;
   }
 
   if (!parsed.ok) {
+    return parsed;
+  }
+
+  if (isModernBootstrapResponse_(originalAction, parsed) || isModernDashboardResponse_(originalAction, parsed)) {
     return parsed;
   }
 
@@ -114,6 +184,14 @@ function normalizeLegacyResponse_(originalAction, parsed, requestedPeriod) {
   }
 
   return parsed;
+}
+
+function isModernBootstrapResponse_(originalAction, parsed) {
+  return originalAction === 'getBootstrapData' && Boolean(parsed.data && parsed.data.catalogs);
+}
+
+function isModernDashboardResponse_(originalAction, parsed) {
+  return originalAction === 'getDashboard' && Boolean(parsed.data && parsed.data.overview);
 }
 
 function normalizeBootstrapResponse_(parsed, requestedPeriod) {
