@@ -172,8 +172,7 @@ exports.handler = async function handler(event) {
           format: {
             type: 'json_schema',
             name: 'ebg_chat_result',
-            schema: buildSchema_(),
-            strict: true
+            schema: buildSchema_()
           }
         },
         safety_identifier: hashActor_(body.actor || 'anonymous')
