@@ -276,7 +276,7 @@ function normalizeCatalogCollection_(items) {
     ? items.map(function mapItem(item) {
         return {
           id: String(item.id || item.cuenta_id || item.account_code || ''),
-          nombre: item.nombre || item.name || item.account_name || '',
+          nombre: pickCatalogName_(item),
           estado: item.estado || item.status || '',
           notes: item.notes || ''
         };
@@ -293,12 +293,59 @@ function normalizePlanCuentas_(items) {
           id: code,
           cuenta_id: code,
           codigo: code,
-          nombre: item.nombre || item.name || item.account_name || '',
+          nombre: pickPlanCuentaName_(item),
           estado: item.estado || item.status || (item.is_active ? 'ACTIVO' : 'INACTIVO'),
           notes: item.notes || ''
         };
       })
     : [];
+}
+
+function pickCatalogName_(item) {
+  const directName = cleanText_(item.nombre || item.name || item.account_name || '');
+  const codeName = cleanText_(item.codigo || item.code || '');
+  const summaryName = cleanText_(item.uso_resumen || '');
+
+  if (!isWeakCatalogName_(directName)) {
+    return directName;
+  }
+
+  return codeName || summaryName || directName || String(item.id || item.cuenta_id || '');
+}
+
+function pickPlanCuentaName_(item) {
+  const directName = cleanText_(item.nombre || item.name || item.account_name || '');
+  const codeName = cleanText_(item.codigo || item.code || '');
+  const summaryName = cleanText_(item.uso_resumen || '');
+
+  if (!isWeakCatalogName_(directName)) {
+    return directName;
+  }
+
+  return codeName || summaryName || directName || String(item.id || item.cuenta_id || '');
+}
+
+function isWeakCatalogName_(value) {
+  return [
+    '',
+    'activo',
+    'inactivo',
+    'pasivo',
+    'patrimonio',
+    'ingreso',
+    'gasto',
+    'costo',
+    'variable',
+    'fijo',
+    'efectivo',
+    'banco',
+    'transito',
+    'pasarela'
+  ].includes(cleanText_(value).toLowerCase());
+}
+
+function cleanText_(value) {
+  return String(value || '').trim();
 }
 
 function normalizeBreakdownRows_(items) {
