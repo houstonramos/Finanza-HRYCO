@@ -11,6 +11,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="./css/base.css" />
+    <link rel="stylesheet" href="./css/financial-states.css" />
   </head>
   <body>
     <div class="app-shell">
@@ -179,6 +180,63 @@
               <div id="debtTable" class="table-shell"></div>
             </article>
           </div>
+
+          <article id="financialStatesSection" class="panel financial-states-panel">
+            <div class="panel-head">
+              <div>
+                <p class="eyebrow">Estados financieros gerenciales</p>
+                <h3>Estado de resultados, flujo de caja, balance y deuda</h3>
+              </div>
+              <div class="topbar-actions">
+                <button id="financialStatesPrintButton" class="ghost-button" type="button">
+                  Imprimir / Guardar PDF
+                </button>
+              </div>
+            </div>
+
+            <p id="financialStatesStatus" class="financial-states-status">
+              Preparando estados del período...
+            </p>
+
+            <div id="financialStatesHighlights" class="metric-grid"></div>
+
+            <div class="split-grid financial-states-grid">
+              <section class="financial-state-card">
+                <div class="financial-state-head">
+                  <p class="eyebrow">Estado de resultados</p>
+                  <h3>Resultado operativo y neto estimado</h3>
+                </div>
+                <div id="incomeStatementMount" class="table-shell"></div>
+              </section>
+
+              <section class="financial-state-card">
+                <div class="financial-state-head">
+                  <p class="eyebrow">Flujo de caja</p>
+                  <h3>Caja, deuda e impuestos</h3>
+                </div>
+                <div id="cashFlowMount" class="table-shell"></div>
+              </section>
+            </div>
+
+            <div class="split-grid financial-states-grid">
+              <section class="financial-state-card">
+                <div class="financial-state-head">
+                  <p class="eyebrow">Balance gerencial</p>
+                  <h3>Activos corrientes, pasivos y patrimonio</h3>
+                </div>
+                <div id="balanceMount" class="table-shell"></div>
+              </section>
+
+              <section class="financial-state-card">
+                <div class="financial-state-head">
+                  <p class="eyebrow">Reporte de deuda</p>
+                  <h3>Resumen y detalle por acreedor</h3>
+                </div>
+                <div id="debtSummaryMount" class="table-shell"></div>
+                <div id="debtDetailMount" class="table-shell"></div>
+              </section>
+            </div>
+          </article>
         </section>
 
         <section class="view" data-view="cargas">
@@ -308,5 +366,6 @@
 
     <script src="./js/api.js"></script>
     <script src="./js/app.js"></script>
+    <script src="./js/financial-states.js"></script>
   </body>
 </html>
