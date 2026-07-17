@@ -1,0 +1,127 @@
+.financial-states-panel {
+  gap: 20px;
+}
+
+.financial-states-status,
+.statement-caption {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.financial-states-grid {
+  align-items: start;
+}
+
+.financial-state-card {
+  display: grid;
+  gap: 14px;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--paper-soft);
+}
+
+.financial-state-head {
+  display: grid;
+  gap: 4px;
+}
+
+.financial-state-head h3 {
+  font-size: 1.05rem;
+}
+
+.statement-stack {
+  display: grid;
+  gap: 18px;
+}
+
+.statement-table td:first-child {
+  white-space: normal;
+}
+
+.statement-row--section td {
+  padding-top: 16px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent-strong);
+  border-bottom: 0;
+}
+
+.statement-row--section td:last-child {
+  color: transparent;
+}
+
+.statement-row--detail td:first-child {
+  padding-left: 28px;
+  color: var(--muted);
+}
+
+.statement-row--subtotal td {
+  font-weight: 700;
+  border-top: 1px solid var(--line-strong);
+}
+
+.statement-row--total td {
+  font-weight: 700;
+  border-top: 2px solid var(--rule-ink);
+  border-bottom: 2px solid var(--rule-ink);
+}
+
+.statement-row--positive td:last-child {
+  color: var(--positive);
+}
+
+.statement-row--danger td:last-child {
+  color: var(--danger);
+}
+
+.statement-row--warning td:last-child {
+  color: var(--warning);
+}
+
+@media print {
+  body {
+    background: #fff;
+  }
+
+  .app-shell {
+    display: block;
+    max-width: none;
+    padding: 0;
+  }
+
+  .sidebar,
+  .topbar,
+  .status-strip,
+  .ghost-button,
+  .solid-button,
+  .chat-actions,
+  .chat-toolbar,
+  .tab-row {
+    display: none !important;
+  }
+
+  .view:not([data-view="panel"]) {
+    display: none !important;
+  }
+
+  .view[data-view="panel"] > :not(#financialStatesSection) {
+    display: none !important;
+  }
+
+  #financialStatesSection {
+    display: grid !important;
+    border: 0;
+    box-shadow: none;
+    padding: 0;
+  }
+
+  .financial-state-card {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    background: #fff;
+  }
+}
