@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Source+Sans+3:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Source+Sans+3:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="./css/base.css" />
@@ -17,12 +17,22 @@
       <aside class="sidebar">
         <div class="brand-block">
           <p class="eyebrow">Houston Ramos y Co</p>
-          <h1>Panel financiero gerencial manual para cerrar bien el mes.</h1>
+          <h1>Cierra bien el mes.</h1>
           <p class="support-copy">
-            Esta versión se alimenta con resúmenes mensuales y deja la base lista para
-            crecer luego a captura semanal, diaria y automatizaciones.
+            Panel financiero gerencial. Resúmenes mensuales confiables primero;
+            captura semanal y automatización después.
           </p>
         </div>
+
+        <section class="side-card side-card--period">
+          <p class="eyebrow">Periodo activo</p>
+          <div class="period-row">
+            <input id="globalPeriod" type="month" aria-label="Periodo activo" />
+            <button id="refreshDashboardButton" class="ghost-button" type="button">
+              Recargar panel
+            </button>
+          </div>
+        </section>
 
         <nav class="nav" aria-label="Secciones">
           <button class="nav-link is-active" type="button" data-view-target="panel">
@@ -43,17 +53,7 @@
           </button>
         </nav>
 
-        <section class="side-card">
-          <p class="eyebrow">Periodo activo</p>
-          <div class="period-row">
-            <input id="globalPeriod" type="month" />
-            <button id="refreshDashboardButton" class="ghost-button" type="button">
-              Recargar panel
-            </button>
-          </div>
-        </section>
-
-        <section class="side-card">
+        <section class="side-card side-card--vision">
           <p class="eyebrow">Visión V1</p>
           <div class="mini-list">
             <div class="mini-item">
@@ -74,7 +74,7 @@
 
       <main class="main-content">
         <header class="topbar">
-          <div>
+          <div class="topbar-heading">
             <p class="eyebrow">Sistema financiero gerencial</p>
             <h2 id="viewTitle">Panel de decisión</h2>
             <p id="viewSubtitle" class="support-copy">
@@ -97,10 +97,10 @@
             <span class="status-dot status-dot--open"></span>
             <span>Fuente oficial: Google Sheet maestro</span>
           </div>
-        <div class="status-chip">
-          <span id="periodStatusDot" class="status-dot status-dot--warning"></span>
-          <span id="periodStatusText">Periodo pendiente de validar</span>
-        </div>
+          <div class="status-chip">
+            <span id="periodStatusDot" class="status-dot status-dot--warning"></span>
+            <span id="periodStatusText">Periodo pendiente de validar</span>
+          </div>
         </div>
 
         <section class="view is-active" data-view="panel">
@@ -231,7 +231,7 @@
               </div>
 
               <div class="chat-toolbar">
-                <select id="chatMode">
+                <select id="chatMode" aria-label="Modo del chat">
                   <option value="cargar">Cargar</option>
                   <option value="consultar">Consultar</option>
                   <option value="analizar">Analizar</option>
@@ -246,7 +246,7 @@
               <form id="chatForm" class="chat-form">
                 <textarea
                   id="chatInput"
-                  placeholder="Escribe algo como: En julio 2026 Planta vendió 220000 de lavado por membresías con costo directo de 90000."
+                  placeholder="Escribe algo como: Planta vendió 220000 de lavado por membresías en julio 2026, con costo directo de 90000."
                 ></textarea>
                 <div class="chat-actions">
                   <button class="solid-button" type="submit">Preguntar al chat</button>
@@ -281,10 +281,13 @@
               </div>
               <div id="controlSummary" class="control-card"></div>
               <div id="periodControlCard" class="control-card"></div>
-              <div class="chat-actions">
-                <button id="closePeriodButton" class="solid-button" type="button">
+              <div class="chat-actions danger-zone">
+                <button id="closePeriodButton" class="solid-button solid-button--danger" type="button">
                   Cerrar periodo actual
                 </button>
+                <p class="danger-note">
+                  Cerrar un periodo bloquea nuevas cargas sobre ese mes.
+                </p>
               </div>
               <pre id="output" class="output">Esperando acciones...</pre>
             </article>
