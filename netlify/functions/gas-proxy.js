@@ -1,57 +1,91 @@
-exports.handler = async function (event) {
+const crypto = require('node:crypto');
+
+exports.handler = async function handler(event) {
   if (event.httpMethod !== 'POST') {
     return jsonResponse(405, {
       ok: false,
-      message: 'Solo POST permitido en el proxy.'
+      code: 'METHOD_NOT_ALLOWED',
+      message: 'Usa POST para consumir este proxy.'
     });
   }
 
-  if (!process.env.GAS_WEB_APP_URL || !process.env.GAS_SHARED_TOKEN) {
-    return jsonResponse(500, {
+  const gasUrl = process.env.GAS_WEB_APP_URL;
+  const gasToken = process.env.GAS_SHARED_TOKEN || '';
+
+  if (!gasUrl) {
+    return jsonResponse(200, {
       ok: false,
-      message: 'Faltan GAS_WEB_APP_URL o GAS_SHARED_TOKEN en Netlify.'
+      code: 'MISSING_CONFIG',
+      message: 'Falta la variable GAS_WEB_APP_URL. El frontend puede seguir operando en modo demo.',
+      requestId: buildRequestId('proxy')
     });
   }
+
+  let body = {};
 
   try {
-    var body = JSON.parse(event.body || '{}');
-    var upstreamResponse = await fetch(process.env.GAS_WEB_APP_URL, {
+    body = JSON.parse(event.body || '{}');
+  } catch (error) {
+    return jsonResponse(400, {
+      ok: false,
+      code: 'INVALID_JSON',
+      message: 'El body enviado al proxy no es JSON válido.'
+    });
+  }
+
+  const requestId = body.requestId || buildRequestId(body.action || 'proxy');
+  const payload = {
+    ...body,
+    requestId,
+    authToken: gasToken
+  };
+
+  try {
+    const response = await fetch(gasUrl, {
       method: 'POST',
       headers: {
-        'content-type': 'text/plain;charset=utf-8'
+        'content-type': 'application/json'
       },
-      body: JSON.stringify(
-        Object.assign({}, body, {
-          token: process.env.GAS_SHARED_TOKEN
-        })
-      ),
-      redirect: 'follow'
+      body: JSON.stringify(payload)
     });
-    var text = await upstreamResponse.text();
 
+    const text = await response.text();
     return {
-      statusCode: upstreamResponse.status || 200,
+      statusCode: response.ok ? 200 : response.status,
       headers: {
-        'content-type': 'application/json; charset=utf-8',
+        'content-type': 'application/json',
         'cache-control': 'no-store'
       },
       body: text
     };
   } catch (error) {
-    return jsonResponse(500, {
+    return jsonResponse(200, {
       ok: false,
-      message: error.message || 'No se pudo conectar con Apps Script.'
+      code: 'GAS_UNREACHABLE',
+      message: 'No se pudo conectar con Apps Script; se mantiene modo demo.',
+      requestId,
+      details: {
+        error: error.message
+      }
     });
   }
 };
 
-function jsonResponse(statusCode, payload) {
+function buildRequestId(prefix) {
+  return [
+    String(prefix || 'REQ').toUpperCase(),
+    new Date().toISOString().replace(/[-:.TZ]/g, '').slice(0, 14),
+    crypto.randomUUID().slice(0, 8).toUpperCase()
+  ].join('_');
+}
+
+function jsonResponse(statusCode, body) {
   return {
-    statusCode: statusCode,
+    statusCode,
     headers: {
-      'content-type': 'application/json; charset=utf-8',
+      'content-type': 'application/json',
       'cache-control': 'no-store'
     },
-    body: JSON.stringify(payload)
+    body: JSON.stringify(body)
   };
 }
