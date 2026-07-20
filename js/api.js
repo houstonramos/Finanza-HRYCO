@@ -37,6 +37,23 @@ window.EBGApi = (function () {
         }
       });
     },
+    getYearSummary: function (year) {
+      return post(gasEndpoint, {
+        action: 'getYearSummary',
+        payload: {
+          year: year
+        }
+      });
+    },
+    listMonthlyRecords: function (entity, periodo) {
+      return post(gasEndpoint, {
+        action: 'listMonthlyRecords',
+        entity: entity,
+        payload: {
+          periodo: periodo
+        }
+      });
+    },
     closePeriod: function (periodo, actor, reason) {
       return post(gasEndpoint, {
         action: 'closePeriod',
@@ -44,6 +61,26 @@ window.EBGApi = (function () {
         payload: {
           periodo: periodo,
           reason: reason
+        }
+      });
+    },
+    deleteMonthlyRecord: function (entity, recordId, actor, reason) {
+      return post(gasEndpoint, {
+        action: 'deleteMonthlyRecord',
+        entity: entity,
+        actor: actor,
+        payload: {
+          record_id: recordId,
+          reason: reason
+        }
+      });
+    },
+    copyRecurringCostsToPeriod: function (periodo, actor) {
+      return post(gasEndpoint, {
+        action: 'copyRecurringCostsToPeriod',
+        actor: actor,
+        payload: {
+          periodo: periodo
         }
       });
     },
