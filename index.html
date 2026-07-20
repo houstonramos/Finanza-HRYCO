@@ -11,7 +11,6 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="./css/base.css" />
-    <link rel="stylesheet" href="./css/financial-states.css" />
   </head>
   <body>
     <div class="app-shell">
@@ -36,21 +35,25 @@
         </section>
 
         <nav class="nav" aria-label="Secciones">
-          <button class="nav-link is-active" type="button" data-view-target="panel">
-            <span class="nav-label">Panel</span>
+          <button class="nav-link is-active" type="button" data-view-target="cargas">
+            <span class="nav-label">Cierre mensual</span>
+            <span class="nav-note">Captura guiada del mes</span>
+          </button>
+          <button class="nav-link" type="button" data-view-target="panel">
+            <span class="nav-label">Tablero</span>
             <span class="nav-note">Márgenes, caja, deuda y consolidado</span>
           </button>
-          <button class="nav-link" type="button" data-view-target="cargas">
-            <span class="nav-label">Cargas</span>
-            <span class="nav-note">Resúmenes mensuales controlados</span>
+          <button class="nav-link" type="button" data-view-target="estados">
+            <span class="nav-label">Estados</span>
+            <span class="nav-note">ER, flujo de caja, balance y deuda</span>
           </button>
           <button class="nav-link" type="button" data-view-target="chat">
-            <span class="nav-label">Chat IA</span>
-            <span class="nav-note">Carga guiada, consultas y análisis</span>
+            <span class="nav-label">Ayuda guiada</span>
+            <span class="nav-note">Consultas, apoyo y borradores</span>
           </button>
           <button class="nav-link" type="button" data-view-target="control">
-            <span class="nav-label">Control</span>
-            <span class="nav-note">Sheet maestro, catálogos y API</span>
+            <span class="nav-label">Soporte</span>
+            <span class="nav-note">Diagnóstico, catálogos y API</span>
           </button>
         </nav>
 
@@ -77,9 +80,9 @@
         <header class="topbar">
           <div class="topbar-heading">
             <p class="eyebrow">Sistema financiero gerencial</p>
-            <h2 id="viewTitle">Panel de decisión</h2>
+            <h2 id="viewTitle">Cierre mensual</h2>
             <p id="viewSubtitle" class="support-copy">
-              Margen por servicio, caja final, deuda y vista consolidada del grupo.
+              Captura primero el mes, revisa después estados, caja y deuda.
             </p>
           </div>
 
@@ -104,7 +107,7 @@
           </div>
         </div>
 
-        <section class="view is-active" data-view="panel">
+        <section class="view" data-view="panel">
           <div class="hero-grid">
             <article class="panel">
               <div class="panel-head">
@@ -180,74 +183,97 @@
               <div id="debtTable" class="table-shell"></div>
             </article>
           </div>
+        </section>
 
-          <article id="financialStatesSection" class="panel financial-states-panel">
+        <section class="view" data-view="estados">
+          <article class="panel">
             <div class="panel-head">
               <div>
                 <p class="eyebrow">Estados financieros gerenciales</p>
-                <h3>Estado de resultados, flujo de caja, balance y deuda</h3>
+                <h3>Lectura formal del período</h3>
               </div>
               <div class="topbar-actions">
-                <button id="financialStatesPrintButton" class="ghost-button" type="button">
+                <button id="exportStatesButton" class="ghost-button" type="button">
                   Imprimir / Guardar PDF
                 </button>
               </div>
             </div>
+            <div id="statesHighlights" class="metric-grid"></div>
+          </article>
 
-            <p id="financialStatesStatus" class="financial-states-status">
-              Preparando estados del período...
-            </p>
-
-            <div id="financialStatesHighlights" class="metric-grid"></div>
-
-            <div class="split-grid financial-states-grid">
-              <section class="financial-state-card">
-                <div class="financial-state-head">
+          <div class="split-grid">
+            <article class="panel">
+              <div class="panel-head">
+                <div>
                   <p class="eyebrow">Estado de resultados</p>
                   <h3>Resultado operativo y neto estimado</h3>
                 </div>
-                <div id="incomeStatementMount" class="table-shell"></div>
-              </section>
+              </div>
+              <div id="incomeStatementTable" class="table-shell"></div>
+            </article>
 
-              <section class="financial-state-card">
-                <div class="financial-state-head">
+            <article class="panel">
+              <div class="panel-head">
+                <div>
                   <p class="eyebrow">Flujo de caja</p>
-                  <h3>Caja, deuda e impuestos</h3>
+                  <h3>Caja, servicio de deuda y flujo libre</h3>
                 </div>
-                <div id="cashFlowMount" class="table-shell"></div>
-              </section>
-            </div>
+              </div>
+              <div id="cashFlowTable" class="table-shell"></div>
+            </article>
+          </div>
 
-            <div class="split-grid financial-states-grid">
-              <section class="financial-state-card">
-                <div class="financial-state-head">
+          <div class="split-grid">
+            <article class="panel">
+              <div class="panel-head">
+                <div>
                   <p class="eyebrow">Balance gerencial</p>
                   <h3>Activos corrientes, pasivos y patrimonio</h3>
                 </div>
-                <div id="balanceMount" class="table-shell"></div>
-              </section>
+              </div>
+              <div id="balanceTable" class="table-shell"></div>
+            </article>
 
-              <section class="financial-state-card">
-                <div class="financial-state-head">
+            <article class="panel">
+              <div class="panel-head">
+                <div>
                   <p class="eyebrow">Reporte de deuda</p>
                   <h3>Resumen y detalle por acreedor</h3>
                 </div>
-                <div id="debtSummaryMount" class="table-shell"></div>
-                <div id="debtDetailMount" class="table-shell"></div>
-              </section>
+              </div>
+              <div id="debtReportTable" class="table-shell"></div>
+            </article>
+          </div>
+
+          <article class="panel">
+            <div class="panel-head">
+              <div>
+                <p class="eyebrow">Resumen anual</p>
+                <h3>Consolidado del año del período activo</h3>
+              </div>
+            </div>
+            <div id="annualHighlights" class="metric-grid"></div>
+            <div class="split-grid">
+              <div id="annualSummaryTable" class="table-shell"></div>
+              <div id="annualIndicatorsTable" class="table-shell"></div>
             </div>
           </article>
         </section>
 
-        <section class="view" data-view="cargas">
+        <section class="view is-active" data-view="cargas">
           <div class="split-grid split-grid--wide">
             <article class="panel">
               <div class="panel-head">
                 <div>
-                  <p class="eyebrow">Resumen mensual</p>
+                  <p class="eyebrow">Captura guiada</p>
                   <h3 id="formTitle">Ingresos del mes</h3>
                 </div>
                 <p id="formSummary" class="support-copy"></p>
+              </div>
+
+              <div class="workflow-note">
+                <strong>Cómo trabajar esta V1</strong>
+                <span>Captura el mes en este orden: ingresos, caja y bancos, gastos, deuda / cuentas, impuestos y luego revisa los estados.</span>
               </div>
 
               <div class="tab-row">
@@ -265,11 +291,23 @@
             <article class="panel">
               <div class="panel-head">
                 <div>
-                  <p class="eyebrow">Actividad</p>
-                  <h3>Últimos movimientos de carga</h3>
+                  <p class="eyebrow">Seguimiento</p>
+                  <h3>Guía rápida y últimos movimientos</h3>
                 </div>
               </div>
               <div id="activityFeed" class="feed-list"></div>
+              <div class="panel-subsection">
+                <div class="panel-inline-actions">
+                  <div>
+                    <p class="eyebrow">Registros del período</p>
+                    <h3>Editar números o eliminar cargas erróneas</h3>
+                  </div>
+                  <button id="refreshRecordsButton" class="ghost-button" type="button">
+                    Recargar registros
+                  </button>
+                </div>
+                <div id="periodRecords" class="table-shell"></div>
+              </div>
             </article>
           </div>
         </section>
@@ -279,7 +317,7 @@
             <article class="panel">
               <div class="panel-head">
                 <div>
-                  <p class="eyebrow">Chat IA controlado</p>
+                  <p class="eyebrow">Ayuda guiada</p>
                   <h3>Carga guiada, consultas y análisis</h3>
                 </div>
                 <p class="support-copy">
@@ -333,10 +371,13 @@
             <article class="panel">
               <div class="panel-head">
                 <div>
-                  <p class="eyebrow">Estado técnico</p>
-                  <h3>Conectividad y respuesta de la API</h3>
+                  <p class="eyebrow">Soporte y diagnóstico</p>
+                  <h3>Conectividad del sistema</h3>
                 </div>
               </div>
+              <p class="support-copy support-copy--panel">
+                Este panel no es para el trabajo diario. Úsalo solo para sincronizar catálogos, revisar errores o cerrar el período.
+              </p>
               <div id="controlSummary" class="control-card"></div>
               <div id="periodControlCard" class="control-card"></div>
               <div class="chat-actions danger-zone">
@@ -347,7 +388,11 @@
                   Cerrar un periodo bloquea nuevas cargas sobre ese mes.
                 </p>
               </div>
-              <pre id="output" class="output">Esperando acciones...</pre>
+              <div id="output" class="output output--summary">Sin alertas técnicas por ahora.</div>
+              <details id="outputDetails" class="output-details">
+                <summary>Ver detalle técnico (solo soporte)</summary>
+                <pre id="outputJson" class="output output--json">Todavía no hay detalle técnico relevante.</pre>
+              </details>
             </article>
 
             <article class="panel">
@@ -366,6 +411,5 @@
 
     <script src="./js/api.js"></script>
     <script src="./js/app.js"></script>
-    <script src="./js/financial-states.js"></script>
   </body>
 </html>
