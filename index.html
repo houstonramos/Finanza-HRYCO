@@ -3,11 +3,11 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Houston Ramos y Co Finance V1</title>
+    <title>Houston Ramos y Co | Finanzas</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Source+Sans+3:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="./css/base.css" />
@@ -17,10 +17,10 @@
       <aside class="sidebar">
         <div class="brand-block">
           <p class="eyebrow">Houston Ramos y Co</p>
-          <h1>Cierra bien el mes.</h1>
+          <h1>Finanzas claras, mes cerrado.</h1>
           <p class="support-copy">
-            Panel financiero gerencial. Resúmenes mensuales confiables primero;
-            captura semanal y automatización después.
+            Registra el mes, revisa caja, utilidad y deuda sin perder el histórico
+            ni mezclar operación con ruido técnico.
           </p>
         </div>
 
@@ -29,48 +29,44 @@
           <div class="period-row">
             <input id="globalPeriod" type="month" aria-label="Periodo activo" />
             <button id="refreshDashboardButton" class="ghost-button" type="button">
-              Recargar panel
+              Actualizar panel
             </button>
           </div>
         </section>
 
         <nav class="nav" aria-label="Secciones">
           <button class="nav-link is-active" type="button" data-view-target="cargas">
-            <span class="nav-label">Cierre mensual</span>
-            <span class="nav-note">Captura guiada del mes</span>
+            <span class="nav-label">Mes en curso</span>
+            <span class="nav-note">Qué falta, qué cargaste y qué corregir</span>
           </button>
           <button class="nav-link" type="button" data-view-target="panel">
             <span class="nav-label">Tablero</span>
-            <span class="nav-note">Márgenes, caja, deuda y consolidado</span>
+            <span class="nav-note">Vista gerencial del mes</span>
           </button>
           <button class="nav-link" type="button" data-view-target="estados">
             <span class="nav-label">Estados</span>
             <span class="nav-note">ER, flujo de caja, balance y deuda</span>
           </button>
-          <button class="nav-link" type="button" data-view-target="chat">
-            <span class="nav-label">Ayuda guiada</span>
-            <span class="nav-note">Consultas, apoyo y borradores</span>
-          </button>
           <button class="nav-link" type="button" data-view-target="control">
-            <span class="nav-label">Soporte</span>
-            <span class="nav-note">Diagnóstico, catálogos y API</span>
+            <span class="nav-label">Control</span>
+            <span class="nav-note">Cierres, catálogos y conexión</span>
+          </button>
+          <button class="nav-link" type="button" data-view-target="chat">
+            <span class="nav-label">Carga por texto</span>
+            <span class="nav-note">Beta; si entiende, llena el formulario</span>
           </button>
         </nav>
 
-        <section class="side-card side-card--vision">
-          <p class="eyebrow">Visión V1</p>
+        <section class="side-card side-card--note">
+          <p class="eyebrow">Reglas base</p>
           <div class="mini-list">
             <div class="mini-item">
-              <strong>Manual mensual</strong>
-              <span>Resúmenes confiables primero, automatización después.</span>
+              <strong>Fuente oficial</strong>
+              <span>El Sheet maestro sigue siendo la base histórica del sistema.</span>
             </div>
             <div class="mini-item">
-              <strong>Sheet maestro</strong>
-              <span>Google Sheets es la base histórica y fuente oficial.</span>
-            </div>
-            <div class="mini-item">
-              <strong>Catálogos editables</strong>
-              <span>Se puede crecer sin romper el histórico.</span>
+              <strong>Carga principal</strong>
+              <span>La operación diaria entra por formularios; el asistente es solo apoyo.</span>
             </div>
           </div>
         </section>
@@ -79,16 +75,16 @@
       <main class="main-content">
         <header class="topbar">
           <div class="topbar-heading">
-            <p class="eyebrow">Sistema financiero gerencial</p>
-            <h2 id="viewTitle">Cierre mensual</h2>
+            <p class="eyebrow">Houston Ramos y Co · Finanzas gerenciales</p>
+            <h2 id="viewTitle">Mes en curso</h2>
             <p id="viewSubtitle" class="support-copy">
-              Captura primero el mes, revisa después estados, caja y deuda.
+              Un cierre guiado para saber qué falta, qué está cargado y qué números ya puedes revisar.
             </p>
           </div>
 
           <div class="topbar-actions">
-            <button id="healthButton" class="ghost-button" type="button">Estado API</button>
-            <button id="bootstrapButton" class="solid-button" type="button">Sincronizar catálogos</button>
+            <button id="healthButton" class="ghost-button" type="button">Revisar conexión</button>
+            <button id="bootstrapButton" class="solid-button" type="button">Actualizar catálogos</button>
           </div>
         </header>
 
@@ -113,7 +109,7 @@
               <div class="panel-head">
                 <div>
                   <p class="eyebrow">Resumen ejecutivo</p>
-                  <h3>Lo primero que tienes que mirar</h3>
+                  <h3>Lo primero que importa</h3>
                 </div>
               </div>
               <div id="overviewCards" class="metric-grid"></div>
@@ -122,8 +118,8 @@
             <article class="panel panel--soft">
               <div class="panel-head">
                 <div>
-                  <p class="eyebrow">Lectura rápida</p>
-                  <h3>Empresa con y sin deuda</h3>
+                  <p class="eyebrow">Lectura gerencial</p>
+                  <h3>Qué te está diciendo el mes</h3>
                 </div>
               </div>
               <div id="overviewNarrative" class="narrative-card"></div>
@@ -261,19 +257,42 @@
         </section>
 
         <section class="view is-active" data-view="cargas">
+          <div class="hero-grid hero-grid--month">
+            <article class="panel">
+              <div class="panel-head">
+                <div>
+                  <p class="eyebrow">Cierre del mes</p>
+                  <h3>Qué tan completo va este período</h3>
+                </div>
+              </div>
+              <div id="monthSummaryCards" class="metric-grid"></div>
+              <div id="monthSteps" class="workflow-grid"></div>
+            </article>
+
+            <article class="panel panel--soft">
+              <div class="panel-head">
+                <div>
+                  <p class="eyebrow">Siguiente paso</p>
+                  <h3>Dónde enfocarte ahora</h3>
+                </div>
+              </div>
+              <div id="monthNarrative" class="narrative-card"></div>
+            </article>
+          </div>
+
           <div class="split-grid split-grid--wide">
             <article class="panel">
               <div class="panel-head">
                 <div>
-                  <p class="eyebrow">Captura guiada</p>
+                  <p class="eyebrow">Formulario activo</p>
                   <h3 id="formTitle">Ingresos del mes</h3>
                 </div>
                 <p id="formSummary" class="support-copy"></p>
               </div>
 
               <div class="workflow-note">
-                <strong>Cómo trabajar esta V1</strong>
-                <span>Captura el mes en este orden: ingresos, caja y bancos, gastos, deuda / cuentas, impuestos y luego revisa los estados.</span>
+                <strong>Ruta simple</strong>
+                <span>1. Ingresos 2. Caja 3. Gastos 4. Deuda, cartera e impuestos 5. Revisión de estados.</span>
               </div>
 
               <div class="tab-row">
@@ -291,8 +310,8 @@
             <article class="panel">
               <div class="panel-head">
                 <div>
-                  <p class="eyebrow">Seguimiento</p>
-                  <h3>Guía rápida y últimos movimientos</h3>
+                  <p class="eyebrow">Control del período</p>
+                  <h3>Historial, edición y correcciones</h3>
                 </div>
               </div>
               <div id="activityFeed" class="feed-list"></div>
@@ -317,23 +336,23 @@
             <article class="panel">
               <div class="panel-head">
                 <div>
-                  <p class="eyebrow">Ayuda guiada</p>
-                  <h3>Carga guiada, consultas y análisis</h3>
+                  <p class="eyebrow">Carga por texto</p>
+                  <h3>Escribe el movimiento y lo paso al formulario</h3>
                 </div>
                 <p class="support-copy">
-                  En V1 no inventa contabilidad: interpreta, pregunta lo que falta y
-                  propone un borrador confirmable.
+                  Si la IA entiende bien el movimiento, lo convierto en borrador y
+                  lo llevo al formulario para que solo revises y guardes.
                 </p>
               </div>
 
               <div class="chat-toolbar">
                 <select id="chatMode" aria-label="Modo del chat">
-                  <option value="cargar">Cargar</option>
+                  <option value="cargar">Cargar borrador</option>
                   <option value="consultar">Consultar</option>
                   <option value="analizar">Analizar</option>
                 </select>
                 <button id="chatExamplesButton" class="ghost-button" type="button">
-                  Ejemplos
+                  Usar ejemplo
                 </button>
               </div>
 
@@ -345,9 +364,9 @@
                   placeholder="Escribe algo como: Planta vendió 220000 de lavado por membresías en julio 2026, con costo directo de 90000."
                 ></textarea>
                 <div class="chat-actions">
-                  <button class="solid-button" type="submit">Preguntar al chat</button>
+                  <button class="solid-button" type="submit">Interpretar y cargar</button>
                   <button id="chatToFormButton" class="ghost-button" type="button">
-                    Pasar borrador a formulario
+                    Abrir formulario
                   </button>
                 </div>
               </form>
@@ -356,8 +375,8 @@
             <article class="panel">
               <div class="panel-head">
                 <div>
-                  <p class="eyebrow">Borrador estructurado</p>
-                  <h3>Lo que el chat entendió</h3>
+                  <p class="eyebrow">Resultado</p>
+                  <h3>Resumen entendible</h3>
                 </div>
               </div>
               <div id="chatDraft" class="draft-card"></div>
@@ -411,5 +430,6 @@
 
     <script src="./js/api.js"></script>
     <script src="./js/app.js"></script>
+    <script src="./js/period-bootstrap.js"></script>
   </body>
 </html>
