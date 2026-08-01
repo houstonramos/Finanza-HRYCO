@@ -1,0 +1,408 @@
+body.ux-simplified .topbar-actions.ux-simplifier-hidden {
+  display: none;
+}
+
+body.ux-simplified .ux-hidden-nav,
+body.ux-simplified [data-view="panel"],
+body.ux-simplified [data-view="chat"] {
+  display: none !important;
+}
+
+body.ux-simplified .side-card--note,
+body.ux-simplified .workflow-note,
+body.ux-simplified #activityFeed {
+  display: none !important;
+}
+
+body.ux-simplified .hero-grid--month {
+  grid-template-columns: 1fr;
+}
+
+body.ux-simplified #monthSummaryCards {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+body.ux-simplified .simple-completion-guide {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  margin-top: 16px;
+  padding: 14px 16px;
+  border: 1px solid rgba(20, 90, 82, 0.14);
+  border-radius: var(--radius-md);
+  background: linear-gradient(180deg, rgba(20, 90, 82, 0.08) 0%, rgba(20, 90, 82, 0.03) 100%);
+  align-items: center;
+}
+
+body.ux-simplified .simple-completion-guide__copy {
+  display: grid;
+  gap: 4px;
+}
+
+body.ux-simplified .simple-completion-guide__copy strong {
+  font-size: 0.98rem;
+  color: var(--accent-strong);
+}
+
+body.ux-simplified .simple-completion-guide__copy span {
+  color: var(--muted);
+  font-size: 13.5px;
+  line-height: 1.5;
+}
+
+body.ux-simplified .simple-completion-guide__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  flex: 0 0 auto;
+}
+
+body.ux-simplified #monthSteps {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 14px;
+}
+
+body.ux-simplified [data-view="cargas"] .panel--soft,
+body.ux-simplified [data-view="cargas"] .panel-head .support-copy:empty {
+  display: none;
+}
+
+body.ux-simplified [data-view="cargas"] .split-grid--wide {
+  grid-template-columns: 1fr;
+}
+
+body.ux-simplified [data-view="cargas"] .panel-inline-actions {
+  align-items: flex-start;
+}
+
+body.ux-simplified .simple-capture-guide {
+  display: grid;
+  gap: 6px;
+  padding: 14px 16px;
+  border: 1px solid rgba(20, 90, 82, 0.12);
+  border-radius: var(--radius-md);
+  background: linear-gradient(180deg, rgba(20, 90, 82, 0.08) 0%, rgba(20, 90, 82, 0.03) 100%);
+}
+
+body.ux-simplified .simple-capture-guide strong {
+  font-size: 1rem;
+  color: var(--accent-strong);
+}
+
+body.ux-simplified .simple-capture-guide span {
+  color: var(--muted);
+  font-size: 13.5px;
+  line-height: 1.5;
+}
+
+body.ux-simplified .tab-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+body.ux-simplified .tab {
+  min-height: 68px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  text-align: left;
+  white-space: normal;
+  line-height: 1.35;
+  box-shadow: 0 1px 2px rgba(34, 43, 48, 0.03);
+}
+
+body.ux-simplified .tab.is-active {
+  box-shadow: 0 10px 24px rgba(20, 90, 82, 0.12);
+}
+
+body.ux-simplified .record-form {
+  gap: 18px;
+}
+
+body.ux-simplified .simple-form-block,
+body.ux-simplified .wizard-shell {
+  display: grid;
+  gap: 14px;
+}
+
+body.ux-simplified .simple-form-header {
+  display: grid;
+  gap: 4px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--line);
+}
+
+body.ux-simplified .simple-form-header strong {
+  font-size: 1rem;
+}
+
+body.ux-simplified .simple-form-header span {
+  color: var(--muted);
+  font-size: 13.5px;
+  line-height: 1.5;
+}
+
+body.ux-simplified .form-grid.form-grid--primary {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+body.ux-simplified .wizard-progress {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+body.ux-simplified .wizard-progress__step {
+  display: grid;
+  gap: 6px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--paper-soft);
+  text-align: left;
+  color: var(--muted);
+}
+
+body.ux-simplified .wizard-progress__step span {
+  display: inline-flex;
+  width: 24px;
+  height: 24px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: rgba(20, 90, 82, 0.08);
+  color: var(--accent-strong);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+body.ux-simplified .wizard-progress__step strong {
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+body.ux-simplified .wizard-progress__step.is-active {
+  border-color: rgba(20, 90, 82, 0.2);
+  background: linear-gradient(180deg, rgba(20, 90, 82, 0.08) 0%, rgba(20, 90, 82, 0.03) 100%);
+  color: var(--ink);
+}
+
+body.ux-simplified .wizard-progress__step.is-complete {
+  border-color: rgba(47, 120, 92, 0.2);
+  color: var(--ink);
+}
+
+body.ux-simplified .wizard-progress__step.is-complete span {
+  background: rgba(47, 120, 92, 0.12);
+  color: var(--positive);
+}
+
+body.ux-simplified .wizard-panes {
+  display: grid;
+}
+
+body.ux-simplified .wizard-pane {
+  display: none;
+  gap: 14px;
+}
+
+body.ux-simplified .wizard-pane.is-active {
+  display: grid;
+}
+
+body.ux-simplified .wizard-pane__head {
+  display: grid;
+  gap: 4px;
+}
+
+body.ux-simplified .wizard-pane__head strong {
+  font-size: 1rem;
+}
+
+body.ux-simplified .wizard-pane__head span {
+  color: var(--muted);
+  font-size: 13.5px;
+  line-height: 1.5;
+}
+
+body.ux-simplified .field,
+body.ux-simplified .field-wide {
+  gap: 7px;
+}
+
+body.ux-simplified .field label,
+body.ux-simplified .field-wide label {
+  font-size: 12.5px;
+  letter-spacing: 0;
+}
+
+body.ux-simplified .simple-form-details {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--paper-soft);
+  overflow: hidden;
+}
+
+body.ux-simplified .simple-form-details summary {
+  cursor: pointer;
+  padding: 14px 16px;
+  font-weight: 700;
+  color: var(--ink);
+  list-style: none;
+}
+
+body.ux-simplified .simple-form-details[open] summary {
+  border-bottom: 1px solid var(--line);
+}
+
+body.ux-simplified .simple-form-details > div {
+  padding: 14px 16px 16px;
+}
+
+body.ux-simplified .simple-form-tip {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+body.ux-simplified .wizard-footer {
+  display: grid;
+  gap: 12px;
+}
+
+body.ux-simplified .wizard-footer__main,
+body.ux-simplified .wizard-secondary-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+body.ux-simplified .wizard-secondary-actions {
+  padding-top: 6px;
+  border-top: 1px solid var(--line);
+}
+
+body.ux-simplified .wizard-save-button {
+  margin-left: auto;
+}
+
+body.ux-simplified .cost-category-helper {
+  display: grid;
+  gap: 10px;
+  padding: 14px 16px;
+  border: 1px solid rgba(20, 90, 82, 0.12);
+  border-radius: var(--radius-md);
+  background: rgba(20, 90, 82, 0.05);
+}
+
+body.ux-simplified .cost-category-helper__head {
+  display: grid;
+  gap: 4px;
+}
+
+body.ux-simplified .cost-category-helper__head strong {
+  font-size: 14px;
+}
+
+body.ux-simplified .cost-category-helper__head span {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+body.ux-simplified .cost-category-helper__current {
+  padding: 10px 12px;
+  border: 1px dashed rgba(20, 90, 82, 0.2);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.55);
+  color: var(--accent-strong);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+body.ux-simplified .cost-category-helper__choices {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+body.ux-simplified .cost-category-helper__pill {
+  padding: 9px 12px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+body.ux-simplified .cost-category-helper__pill.is-active {
+  border-color: rgba(20, 90, 82, 0.2);
+  background: var(--accent-soft);
+  color: var(--accent-strong);
+}
+
+body.ux-simplified .records-fold {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--paper-soft);
+  overflow: hidden;
+}
+
+body.ux-simplified .records-fold summary {
+  cursor: pointer;
+  padding: 14px 16px;
+  font-weight: 700;
+  list-style: none;
+}
+
+body.ux-simplified .records-fold[open] summary {
+  border-bottom: 1px solid var(--line);
+}
+
+body.ux-simplified .records-fold__content {
+  padding: 14px 16px 16px;
+}
+
+body.ux-simplified .feed-item.feed-item--empty {
+  margin-bottom: 12px;
+  padding: 0 0 12px;
+}
+
+body.ux-simplified .panel-subsection {
+  margin-top: 6px;
+  padding-top: 14px;
+}
+
+body.ux-simplified .panel-inline-actions {
+  align-items: center;
+}
+
+body.ux-simplified .status-strip {
+  gap: 8px 12px;
+}
+
+body.ux-simplified .status-chip {
+  padding: 7px 10px;
+}
+
+@media (max-width: 1024px) {
+  body.ux-simplified .hero-grid--month,
+  body.ux-simplified .simple-completion-guide,
+  body.ux-simplified .tab-row,
+  body.ux-simplified .form-grid.form-grid--primary,
+  body.ux-simplified .wizard-progress {
+    grid-template-columns: 1fr;
+  }
+
+  body.ux-simplified #monthSteps {
+    grid-template-columns: 1fr;
+  }
+
+  body.ux-simplified #monthSummaryCards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
